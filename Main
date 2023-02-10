@@ -1,0 +1,99 @@
+from cryptography.fernet import Fernet
+
+print("        Welcome to KJR Restaurant!"
+      " \n\t+============================+"
+      "\n Please select the meal you would like to purchase!"
+      "\n\t[A]  Breakfast"
+      "\n\t[B]  Lunch"
+      "\n\t[C]  Dinner"
+      "\n\t[D]  Exit")
+c_1 = str(input("Enter your choice here: "))
+if c_1 == 'A' or c_1 == 'a':
+    print(" Please select the food that you would like to purchase. "
+          "\n\t[A]  EggSilog - PHP 18.00"
+          "\n\t[B]  Pandesal and Hot Coffee – PHP 25.00"
+          "\n\t[C]  Champorado – PHP 22.00")
+    sub_c_1 = str(input(" Enter your choice here: "))
+    if sub_c_1 == 'A' or sub_c_1 == 'a':
+        sub_c_1_quant = int(input(" Enter quantity: "))
+        a = sub_c_1_quant * 18
+        other = input("Do you need something else? Y/N ")
+        if other == 'Y' or other == 'y' or other == 'YES' or other == 'yes':
+            print(" Please select the food that you would like to purchase. "
+                  "\n\t[A]  Pandesal and Hot Coffee – PHP 25.00"
+                  "\n\t[B]  Champorado – PHP 22.00")
+            sub_c_1_1 = str(input(" Enter your choice here: "))
+            if sub_c_1_1 == 'A' or sub_c_1_1 == 'a':
+                sub_c_1_1quant = int(input(" Enter quantity: "))
+                b = sub_c_1_1quant * 25
+                other = input("Do you need something else? Y/N ")
+                if other == 'Y' or other == 'y' or other == 'YES' or other == 'yes':
+                    print(" Please select the food that you would like to purchase. "
+                          "\n\t[A]  Champorado – PHP 22.00")
+                    sub_c_1_2 = str(input(" Enter your choice here: "))
+                    if sub_c_1_2 == 'A' or sub_c_1_2 == 'a':
+                        sub_c_1_2quant = int(input("Enter quantity: "))
+                        c = sub_c_1_2quant * 22
+                        card_num = input("Please Enter your Card Number: ")
+                        card_list = open("Credit Card List.txt", "r")
+                        lines = card_list.readlines()
+                        users = [use.strip() for use in lines]
+                        if card_num in users:
+                            print("Okay!")
+                            receipt = open("Receipt.txt", "w")
+                            receipt.write("\t\tBreakfast\n" + str(sub_c_1_quant) +
+                                          "\tEggSilog..............." + str(a) + "\n" + str(sub_c_1_1quant) +
+                                          "\tPandesal and Hot Coffee..............." + str(b) + "\n"
+                                          + str(sub_c_1_2quant) +
+                                          "\tChamporado..............." + str(c) + "\n"                                                      
+                                          "\n\nYour total is: " + str(a + b + c))
+                            key = Fernet.generate_key()
+                            print(" Your total is " + str(a + b + c) + "."
+                                  "\n Please go to the counter and present this key")
+                            print("\033[1;32;40m " + str(key))
+                        else:
+                            print("\033[1;31;40m Error! Card Invalid!!")
+                        card_list.close()
+                else:
+                    card_num = input("Please Enter your Card Number: ")
+                    card_list = open("Credit Card List.txt", "r")
+                    lines = card_list.readlines()
+                    users = [use.strip() for use in lines]
+                    if card_num in users:
+                        print("Okay!")
+                        receipt = open("Receipt.txt", "w")
+                        receipt.write("\t\tBreakfast\n" + str(sub_c_1_quant) +
+                                  "\tEggSilog..............." + str(a) + "\n" + str(sub_c_1_1quant) +
+                                  "\tPandesal and Hot Coffee..............." + str(b) + "\n"
+                                  "\n\nYour total is: " + str(a+b))
+                        key = Fernet.generate_key()
+                        print(" Your total is " + str(a+b) + "."
+                              "\n Please go to the counter and present this key")
+                        print("\033[1;32;40m " + str(key))
+                    else:
+                        print("\033[1;31;40m Error! Card Invalid!!")
+                    card_list.close()
+        elif other == 'N' or other == 'n' or other == 'NO' or other == 'no':
+            card_num = input("Please Enter your Card Number: ")
+            card_list = open("Credit Card List.txt", "r")
+            lines = card_list.readlines()
+            users = [use.strip() for use in lines]
+            if card_num in users:
+                print("Okay!")
+                receipt = open("Receipt.txt", "w")
+                receipt.write("\t\tBreakfast\n" + str(sub_c_1_quant) +
+                              "\tEggSilog..............." + str(a) + "\n"
+                                                                     "\n\nYour total is: " + str(a))
+                key = Fernet.generate_key()
+                print(" Your total is " + str(a) + "."
+                                                   "\n Please go to the counter and present this key")
+                print("\033[1;32;40m " + str(key))
+            else:
+                print("\033[1;31;40m Error! Card Invalid!!")
+            card_list.close()
+        else:
+            print(other + " is not a valid option!")
+    else:
+        print("nahhh")
+else:
+    print(" ERROR!")
